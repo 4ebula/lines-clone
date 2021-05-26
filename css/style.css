@@ -8,7 +8,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: block;
-    src: url("/fonts/digital-7.ttf");
+    src: url("../fonts/digital-7/digital-7.ttf");
 }
 body{
     margin: 0;
