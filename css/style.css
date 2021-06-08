@@ -171,6 +171,10 @@ div {
   background: radial-gradient(circle at 40% 40%, #000000, #000000);
 }
 
+.bounce {
+  animation-name: bounce;
+}
+
 @keyframes bounce {
   0% {
     transform: scale(1);

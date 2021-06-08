@@ -2,10 +2,15 @@ import { BaseComponent } from './base-component.js';
 import { COLOR_PALETTE, random } from './constants.js';
 
 export class Ball extends BaseComponent {
-  constructor(root, size = 1) {
+  color;
+
+  state = false;
+
+  constructor(root) {
     super('figure', ['ball'])
     this.color = COLOR_PALETTE[random(7)];
     this.element.classList.add(this.color);
+    this.state = false;
     root.append(this.element);
   }
 
@@ -36,10 +41,8 @@ export class Ball extends BaseComponent {
     return;
   }
   bounce() {
-    if (this.size == 0) return;
-    document.getElementById(`${this.row}${this.col}`).style.animationName = this.state ? "none" : "bounce";
     this.state = !this.state;
-    return this;
+    this.element.classList.toggle('bounce');
   }
   grow() {
     /*  if(this.size == 1) return;*/

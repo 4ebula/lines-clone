@@ -1,150 +1,140 @@
 import { COLOR_PALETTE } from './js/constants.js';
 import { Game } from './js/game.js';
 
-// DELETE AFTERWARDS
-const game1 = new Game();
-
-
-// window.onload = () => {
-//   const game = new Game();
-// };
+window.onload = () => {
+  const game = new Game();
+};
 
 let score = 0;
 let lastCell;
 let tempClr;
 
 
-const field = new Array(9).fill(null);
-for (let i = 0; i < 9; i++) {
-  field[i] = new Array(9).fill(null);
-}
-
-class Ball {
-  constructor(row, col, color, size) {
-    this.row = row;
-    this.col = col;
-    this.color = color;
-    this.size = size;
-    this.state = false;
-    this.explode = false;
-  }
-  create(){
-    let strName = this.size == 0 ? "small " : "ball ";
-    document.getElementById(`${this.row}${this.col}`).className = strName + this.color;
-    field[this.row][this.col] = this;
-    return;
-  }
-  move(rowNew, colNew){
-    if(this.size == 0) return;
-    document.getElementById(`${rowNew}${colNew}`).className = "ball " + this.color;
-    field[rowNew][colNew] = this;
-    document.getElementById(`${this.row}${this.col}`).className = "";
-    field[this.row][this.col] = null;
-    this.row = rowNew;
-    this.col = colNew;
-    return;
-  }
-  delete(){
-    document.getElementById(`${this.row}${this.col}`).style.animationName = 'explode';
-    sleep(300).then(() =>{
-      document.getElementById(`${this.row}${this.col}`).style.animationName = 'none';
-      document.getElementById(`${this.row}${this.col}`).className = "";
-    });
-    field[this.row][this.col] = null;
-    return;
-  }
-  bounce(){
-    if(this.size == 0) return;
-    document.getElementById(`${this.row}${this.col}`).style.animationName = this.state ? "none" : "bounce";
-    this.state = !this.state;
-    return this;
-  }
-  grow(){
-   /*  if(this.size == 1) return;*/
-    document.getElementById(`${this.row}${this.col}`).style.animationName = 'grow';
-    sleep(100).then(() =>{
-      document.getElementById(`${this.row}${this.col}`).className = "ball " + this.color;
-      document.getElementById(`${this.row}${this.col}`).style.animationName = 'none';
-    });
-    
-    this.size = 1;
-    return;
-  }
-}
-
-//Creates field and balls
-// window.onload = function() {
-//   add(5);
-//   add();
+// const field = new Array(9).fill(null);
+// for (let i = 0; i < 9; i++) {
+//   field[i] = new Array(9).fill(null);
 // }
 
-var game = function game(cell){
-  console.log('Cell number is', cell);
-  let row = +`0${cell}`.slice(-2)[0];
-  let col = +`0${cell}`.slice(-2)[1];
-  let curBall = field[row][col];
-  if(lastCell == undefined){
-    if(curBall == null || curBall.size == 0) return;
-    else{
-      curBall.bounce();
-      lastCell = [row, col];
-      return;
-    }
-  }
-  //smth is active
-  else{
-    if(curBall == null){
-      if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
-      field[lastCell[0]][lastCell[1]].bounce().move(row,col);
-      lastCell = undefined;
-      if(!check()) {
-        enlarge();
-        if(tempClr != undefined) {
-          add(1, true, tempClr);
-          tempClr = undefined;
-        }
-        add();
-      }
-      check();
-      return; 
-    }
-    else{
-      if(curBall.size == 0){
-        if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
-        tempClr = curBall.color;
-        curBall = null;
-        let temp = field[lastCell[0]][lastCell[1]];
-        temp.bounce().move(row,col);
-        lastCell = undefined;
-        if(!check()){
-          add(1, true, tempClr);
-          enlarge();
-          add();
-        }
-        else{
-          curBall = new Ball(row, col, tempClr, 0);
-          curBall.create();
-        }
-        check();
-        return;
-      }
-      else{
-        if(lastCell[0] != row || lastCell[1] != col){
-          curBall.bounce();
-          field[lastCell[0]][lastCell[1]].bounce();
-          lastCell[0] = row;
-          lastCell[1] = col;
-          return;
-        }
-        else{
-          curBall.bounce();
-          lastCell = undefined;
-          return;
-        }
-      }
-    }
-  }
-}
+// class Ball {
+//   constructor(row, col, color, size) {
+//     this.row = row;
+//     this.col = col;
+//     this.color = color;
+//     this.size = size;
+//     this.state = false;
+//     this.explode = false;
+//   }
+//   create(){
+//     let strName = this.size == 0 ? "small " : "ball ";
+//     document.getElementById(`${this.row}${this.col}`).className = strName + this.color;
+//     field[this.row][this.col] = this;
+//     return;
+//   }
+//   move(rowNew, colNew){
+//     if(this.size == 0) return;
+//     document.getElementById(`${rowNew}${colNew}`).className = "ball " + this.color;
+//     field[rowNew][colNew] = this;
+//     document.getElementById(`${this.row}${this.col}`).className = "";
+//     field[this.row][this.col] = null;
+//     this.row = rowNew;
+//     this.col = colNew;
+//     return;
+//   }
+//   delete(){
+//     document.getElementById(`${this.row}${this.col}`).style.animationName = 'explode';
+//     sleep(300).then(() =>{
+//       document.getElementById(`${this.row}${this.col}`).style.animationName = 'none';
+//       document.getElementById(`${this.row}${this.col}`).className = "";
+//     });
+//     field[this.row][this.col] = null;
+//     return;
+//   }
+//   bounce(){
+//     if(this.size == 0) return;
+//     document.getElementById(`${this.row}${this.col}`).style.animationName = this.state ? "none" : "bounce";
+//     this.state = !this.state;
+//     return this;
+//   }
+//   grow(){
+//    /*  if(this.size == 1) return;*/
+//     document.getElementById(`${this.row}${this.col}`).style.animationName = 'grow';
+//     sleep(100).then(() =>{
+//       document.getElementById(`${this.row}${this.col}`).className = "ball " + this.color;
+//       document.getElementById(`${this.row}${this.col}`).style.animationName = 'none';
+//     });
+    
+//     this.size = 1;
+//     return;
+//   }
+// }
+
+// var game = function game(cell){
+//   console.log('Cell number is', cell);
+//   let row = +`0${cell}`.slice(-2)[0];
+//   let col = +`0${cell}`.slice(-2)[1];
+//   let curBall = field[row][col];
+//   if(lastCell == undefined){
+//     if(curBall == null || curBall.size == 0) return;
+//     else{
+//       curBall.bounce();
+//       lastCell = [row, col];
+//       return;
+//     }
+//   }
+//   //smth is active
+//   else{
+//     if(curBall == null){
+//       if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
+//       field[lastCell[0]][lastCell[1]].bounce().move(row,col);
+//       lastCell = undefined;
+//       if(!check()) {
+//         enlarge();
+//         if(tempClr != undefined) {
+//           add(1, true, tempClr);
+//           tempClr = undefined;
+//         }
+//         add();
+//       }
+//       check();
+//       return; 
+//     }
+//     else{
+//       if(curBall.size == 0){
+//         if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
+//         tempClr = curBall.color;
+//         curBall = null;
+//         let temp = field[lastCell[0]][lastCell[1]];
+//         temp.bounce().move(row,col);
+//         lastCell = undefined;
+//         if(!check()){
+//           add(1, true, tempClr);
+//           enlarge();
+//           add();
+//         }
+//         else{
+//           curBall = new Ball(row, col, tempClr, 0);
+//           curBall.create();
+//         }
+//         check();
+//         return;
+//       }
+//       else{
+//         if(lastCell[0] != row || lastCell[1] != col){
+//           curBall.bounce();
+//           field[lastCell[0]][lastCell[1]].bounce();
+//           lastCell[0] = row;
+//           lastCell[1] = col;
+//           return;
+//         }
+//         else{
+//           curBall.bounce();
+//           lastCell = undefined;
+//           return;
+//         }
+//       }
+//     }
+//   }
+// }
 
 function add (amount = 3, forceNew = false, overColor = 1) {
   let row, col, size, temp;
