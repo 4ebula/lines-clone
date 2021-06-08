@@ -9,12 +9,6 @@ let score = 0;
 let lastCell;
 let tempClr;
 
-
-// const field = new Array(9).fill(null);
-// for (let i = 0; i < 9; i++) {
-//   field[i] = new Array(9).fill(null);
-// }
-
 // class Ball {
 //   constructor(row, col, color, size) {
 //     this.row = row;
@@ -59,74 +53,6 @@ let tempClr;
     
 //     this.size = 1;
 //     return;
-//   }
-// }
-
-// var game = function game(cell){
-//   console.log('Cell number is', cell);
-//   let row = +`0${cell}`.slice(-2)[0];
-//   let col = +`0${cell}`.slice(-2)[1];
-//   let curBall = field[row][col];
-//   if(lastCell == undefined){
-//     if(curBall == null || curBall.size == 0) return;
-//     else{
-//       curBall.bounce();
-//       lastCell = [row, col];
-//       return;
-//     }
-//   }
-//   //smth is active
-//   else{
-//     if(curBall == null){
-//       if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
-//       field[lastCell[0]][lastCell[1]].bounce().move(row,col);
-//       lastCell = undefined;
-//       if(!check()) {
-//         enlarge();
-//         if(tempClr != undefined) {
-//           add(1, true, tempClr);
-//           tempClr = undefined;
-//         }
-//         add();
-//       }
-//       check();
-//       return; 
-//     }
-//     else{
-//       if(curBall.size == 0){
-//         if(!SolveShort([lastCell[1], lastCell[0]], [col, row])) return; //Checks if movemnt is possible
-//         tempClr = curBall.color;
-//         curBall = null;
-//         let temp = field[lastCell[0]][lastCell[1]];
-//         temp.bounce().move(row,col);
-//         lastCell = undefined;
-//         if(!check()){
-//           add(1, true, tempClr);
-//           enlarge();
-//           add();
-//         }
-//         else{
-//           curBall = new Ball(row, col, tempClr, 0);
-//           curBall.create();
-//         }
-//         check();
-//         return;
-//       }
-//       else{
-//         if(lastCell[0] != row || lastCell[1] != col){
-//           curBall.bounce();
-//           field[lastCell[0]][lastCell[1]].bounce();
-//           lastCell[0] = row;
-//           lastCell[1] = col;
-//           return;
-//         }
-//         else{
-//           curBall.bounce();
-//           lastCell = undefined;
-//           return;
-//         }
-//       }
-//     }
 //   }
 // }
 
