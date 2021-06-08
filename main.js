@@ -49,12 +49,6 @@ let tempClr;
 //     field[this.row][this.col] = null;
 //     return;
 //   }
-//   bounce(){
-//     if(this.size == 0) return;
-//     document.getElementById(`${this.row}${this.col}`).style.animationName = this.state ? "none" : "bounce";
-//     this.state = !this.state;
-//     return this;
-//   }
 //   grow(){
 //    /*  if(this.size == 1) return;*/
 //     document.getElementById(`${this.row}${this.col}`).style.animationName = 'grow';

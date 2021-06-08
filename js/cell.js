@@ -14,7 +14,6 @@ export class Cell extends BaseComponent {
     this.column = j;
 
     root.append(this.element);
-    console.log('BUMP');
   }
 
   createBall() {

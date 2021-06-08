@@ -31,7 +31,6 @@ export class Field extends BaseComponent {
   initGame() {
     for (let i = 0; i < 5;) {
       const coordinate = random(81);
-      coordinate > 81 && console.log(coordinate);
       if (!this.gameField[coordinate].ball) {
         this.gameField[coordinate].createBall();
         i++;
@@ -42,7 +41,6 @@ export class Field extends BaseComponent {
   fieildLogic(target) {
     const cell = this.gameField.find((cell) => cell.element === target);
     const ballExist = cell.ball;
-    console.log(this.lastCell);
     if (ballExist) {
         if (this.lastCell) this.lastCell.ball.bounce();
         if (cell !== this.lastCell) {
@@ -53,10 +51,9 @@ export class Field extends BaseComponent {
         }
     } else {
       if (this.lastCell) {
-        console.log();
         this.lastCell.ball.bounce();
         this.lastCell = null;
-        // move + unbounce}
+        // move + unbounce
       }
     }
   }
