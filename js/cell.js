@@ -1,22 +1,23 @@
-export class Cell {
+import { Ball } from './ball.js';
+import { BaseComponent } from './base-component.js';
+
+export class Cell extends BaseComponent {
   row;
 
   column;
 
-  cell;
+  ball = null;
 
-  constructor(i, j) {
+  constructor(i, j, root) {
+    super('div', ['cell']);
     this.row = i;
     this.column = j;
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.addEventListener('click', () => game(i * 10 + j))
-    // cell.setAttribute("onclick", `game(${i}${j})`); // DELETE after adding event lisner
-    const figure = document.createElement('figure');
-    figure.id = i + '' + j;
-    // figure.className = '';
-    cell.appendChild(figure);
-    window['game-field'].appendChild(cell);
+
+    root.append(this.element);
     console.log('BUMP');
+  }
+
+  createBall() {
+    this.ball = new Ball(this.element);
   }
 }

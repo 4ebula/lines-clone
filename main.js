@@ -1,6 +1,5 @@
 import { COLOR_PALETTE } from './js/constants.js';
 import { Game } from './js/game.js';
-// import { Ball } from './js/ball.js';
 
 // DELETE AFTERWARDS
 const game1 = new Game();
@@ -19,26 +18,6 @@ const field = new Array(9).fill(null);
 for (let i = 0; i < 9; i++) {
   field[i] = new Array(9).fill(null);
 }
-
-let maze = new Array(9).fill(0);
-for (let i = 0; i < maze.length; i++) {
-  maze[i] = new Array(9).fill(0);
-}  
-const movesBase = [
-  [-1, 0],
-  [0, -1],
-  [0, +1],
-  [+1, 0]
- ];
-let trajectory = [];
-
-// window['game-field'].addEventListener('click', () => {
-//   event.target.className === 'cell' && (event.bubbles = false);
-//   event.relatedTarget = event.target;
-//   console.log(event.relatedTarget);
-//   console.log(event.target);
-//   console.log(event);
-// });
 
 class Ball {
   constructor(row, col, color, size) {
@@ -94,10 +73,10 @@ class Ball {
 }
 
 //Creates field and balls
-window.onload = function(){
-  add(5);
-  add();
-}
+// window.onload = function() {
+//   add(5);
+//   add();
+// }
 
 var game = function game(cell){
   console.log('Cell number is', cell);
@@ -167,7 +146,7 @@ var game = function game(cell){
   }
 }
 
-function add(amount = 3, forceNew = false, overColor = 1){
+function add (amount = 3, forceNew = false, overColor = 1) {
   let row, col, size, temp;
   if(forceNew || amount == 5) size = 1;
   else size = 0;
@@ -187,8 +166,9 @@ function add(amount = 3, forceNew = false, overColor = 1){
       temp.create();
       temp.state = false;
       amount--;
-    }while(amount > 0);
+    } while(amount > 0);
 }
+
 function enlarge(){
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++){
