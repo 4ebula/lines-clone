@@ -1,8 +1,20 @@
+import { COLOR_PALETTE } from './js/constants.js';
+import { Game } from './js/game.js';
+// import { Ball } from './js/ball.js';
+
+// DELETE AFTERWARDS
+const game1 = new Game();
+
+
+// window.onload = () => {
+//   const game = new Game();
+// };
+
 let score = 0;
 let lastCell;
 let tempClr;
 
-const colorPalette = ["red", "green", "blue", "yellow", "purple", "cyan", "black"];
+
 const field = new Array(9).fill(null);
 for (let i = 0; i < 9; i++) {
   field[i] = new Array(9).fill(null);
@@ -19,23 +31,14 @@ const movesBase = [
   [+1, 0]
  ];
 let trajectory = [];
-/*
-window['game-field'].addEventListener('click', () => {
-  let _target = event.target;
-  if(_target.tagName === "DIV") {
-    _target = event.target.querySelector('fugure');
-  }
-  game(_target.id);
-  console.log(event.target);
-});
-*/
-window['game-field'].addEventListener('click', () => {
-  event.target.className === 'cell' && (event.bubbles = false);
-  event.relatedTarget = event.target;
-  console.log(event.relatedTarget);
-  console.log(event.target);
-  console.log(event);
-});
+
+// window['game-field'].addEventListener('click', () => {
+//   event.target.className === 'cell' && (event.bubbles = false);
+//   event.relatedTarget = event.target;
+//   console.log(event.relatedTarget);
+//   console.log(event.target);
+//   console.log(event);
+// });
 
 class Ball {
   constructor(row, col, color, size) {
@@ -96,7 +99,7 @@ window.onload = function(){
   add();
 }
 
-function game(cell){
+var game = function game(cell){
   console.log('Cell number is', cell);
   let row = +`0${cell}`.slice(-2)[0];
   let col = +`0${cell}`.slice(-2)[1];
@@ -178,7 +181,7 @@ function add(amount = 3, forceNew = false, overColor = 1){
         row = getRandom(0, 9);
         col = getRandom(0, 9);
       }while(field[row][col] != null);
-      if(forceNew == false) color = colorPalette[getRandom(0, 7)];
+      if(forceNew == false) var color = COLOR_PALETTE[getRandom(0, 7)];
       else color = overColor;
       temp = new Ball(row, col, color, size);
       temp.create();
@@ -203,182 +206,6 @@ function enlarge(){
 const SolveShort = (a, b) => {
   return true;
 }
-
-
-/* THIS is function for shortpath and pathfinder*/
-/*
-const SolveShort = (startPoint, exitPoint) => {
-  for (let i = 0; i < 9; i++){
-    for (let j = 0; j < 9; j++) {
-      maze[i][j] = 0;
-      if(field[i][j] != null && field[i][j].size != 0) maze[i][j] = 1;
-      
-    }
-  }
-  maze[exitPoint[1]][exitPoint[0]] = 2;
-  console.log('a' + maze);
-  class Node {
-   constructor (point, value) {
-    this.left = null;
-    this.right = null;
-    this.forward = null;
-    this.backward = null;
-    this.value = value;
-    this.point = point;
-   }
-  }
- 
-  class Tree {
-   constructor () {
-    this.root = null;
-   }
- 
-   grow (pos, maze, track, currentNode) {
-    const [y, x] = pos.point;
-    const [ey, ex] = exitPoint;
-    const moves = ((y, x, ey, ex) => {
-     switch (true) {
-      case ey < y && ex > x:
-       return [movesBase[0], movesBase[2], movesBase[1], movesBase[3]];
-      case ey < y && ex < x: 
-       return [movesBase[0], movesBase[1], movesBase[3], movesBase[2]];
- 
-      case ey > y && ex > x:
-       return [movesBase[3], movesBase[2], movesBase[0], movesBase[1]];
-      case ey > y && ex < x: 
-       return [movesBase[3], movesBase[1], movesBase[2], movesBase[0]];
- 
-      case ex === x && ey > y:
-       return [movesBase[3], movesBase[1], movesBase[2], movesBase[0]];
-      case ex === x && ey < y:
-       return [movesBase[0], movesBase[1], movesBase[2], movesBase[3]];
- 
-      case ey === y && ex > x:
-       return [movesBase[2], movesBase[0], movesBase[3], movesBase[1]];
-      case ey === y && ex < x:
-       return [movesBase[1], movesBase[0], movesBase[3], movesBase[2]];
- 
-      default:
-       return movesBase;
-     }
-    })(y, x, ey, ex);
-    if (track.length === 1) {
-     this.root = startPose;
-     currentNode = this.root;
-    }
-    const path = moves.map(([yMove, xMove]) => [y + yMove, x + xMove]);
-    const filter = path.filter((path) => {
-     if (path[0] > 8 || path[0] < 0 || path[1] > 8 ||
-             path[1] < 0 || maze[path[0]][path[1]] === 1) {
-      return false;
-     }
-     if (maze[path[0]][path[1]] === 2) {
-       console.log('pervy');
-      this.addTwo(pos, path, currentNode, maze);
-      return false;
-     }
-     return track.findIndex(index => index[0] === path[0] && index[1] === path[1]) === -1;
-    });
-    const nodeArr = filter.map(pos => {
-      console.log('vtoroy');
-     const node = new Node(pos, maze[pos[0]][pos[1]]);
-     if (maze[pos[0]][pos[1]] !== 2) {
-      track.push(pos);
-     }
-     return node
-    });
-    nodeArr.forEach((position, index) => {
-     if (index === 1) {
-      const index = track.findIndex(index => index[0] === position.point[0] && index[1] === position.point[1]);
-      track = track.slice(0, index + 1);
-     }
-     console.log('this encounter');
-     switch (true) {
-      case position.point[0] < pos.point[0]:
-       currentNode.backward = position;
-       this.grow(position, maze, track, currentNode.backward);
-       break;
-      case position.point[0] > pos.point[0]:
-       currentNode.forward = position;
-       this.grow(position, maze, track, currentNode.forward);
-       break;
-      case position.point[1] < pos.point[1]:
-       currentNode.left = position;
-       this.grow(position, maze, track, currentNode.left);
-       break;
-      case position.point[1] > pos.point[1]:
-       currentNode.right = position;
-       this.grow(position, maze, track, currentNode.right);
-       break;
-      default:
-     }
-    });
-   }
- 
-   addTwo (pos, path, currentNode, maze) {
-     console.log('peace');
-    const node = new Node(path, maze[path[0]][path[1]]);
-    switch (true) {
-     case path[0] < pos.point[0]:
-      currentNode.backward = node;
-      break;
-     case path[0] > pos.point[0]:
-      currentNode.forward = node;
-      break;
-     case path[1] < pos.point[1]:
-      currentNode.left = node;
-      break;
-     case path[1] > pos.point[1]:
-      currentNode.right = node;
-      break;
-     default:
-    }
-   }
-   
-   dfsShort (node, arr, shortestPath) {
-    console.log('shit');
-    arr.push([node.value, node.point]);
-    if (node.value === 2) {
-     shortestPath.push([...arr]);
-    }
-    if (node.left) {
-     this.dfsShort(node.left, arr, shortestPath);
-    }
-    if (node.right) {
-     this.dfsShort(node.right, arr, shortestPath);
-    }
-    if (node.forward) {
-     this.dfsShort(node.forward, arr, shortestPath);
-    }
-    if (node.backward) {
-     this.dfsShort(node.backward, arr, shortestPath);
-    }
-    arr.pop()
-    if (!arr.length) {
-     return shortestPath;
-    }
-    console.log('got reel');
-   }
-   
-  }
-  const startPose = new Node([startPoint[0], startPoint[1]], maze[startPoint[0]][startPoint[1]]);
-  const tree = new Tree();
-  tree.grow(startPose, maze, [[startPoint[0], startPoint[1]]]);
-  console.log('tree');
-  const short = tree.dfsShort(tree.root, [], []);
-  console.log('fail');
-  const shortest = short => (short.length) ? short.sort((a, b) => a.length - b.length)[0] : false;
-  if (shortest(short) == false) return false;
-  else{
-   trajectory = [];
-   for (let i = 0; i < shortest(short).length; i++) {
-    trajectory.push(shortest(short)[i][1]);
-    
-   }
-   console.log('shiiit');
-   return true;
-  }
-}*/
 
 function check(){
   let h = horizontal();
@@ -572,17 +399,7 @@ function manual(row, col){
   console.log(field);
   return;
 }
-/*
-function pathTransorm(dest){
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if(field[i][j] == null) pather[i][j] = 0;
-      else if(field[i][j].size == 1) pather[i][j] = 1;
-      pather[dest[0]][dest[1]] = -1;
-    }
-  }
-}
-*/
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
  }
