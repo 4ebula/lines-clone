@@ -19,4 +19,16 @@ export class Cell extends BaseComponent {
   createBall() {
     this.ball = new Ball(this.element);
   }
+
+  set transfer(ball) {
+      this.element.append(ball.element);
+      this.ball = ball;
+  }
+
+  get transfer() {
+    const ball = this.ball;
+    this.element.innerHTML = '';
+    this.ball = null;
+    return ball;
+  }
 }

@@ -52,9 +52,16 @@ export class Field extends BaseComponent {
     } else {
       if (this.lastCell) {
         this.lastCell.ball.bounce();
+        this.moveBall(this.lastCell, cell);
         this.lastCell = null;
+        
         // move + unbounce
       }
     }
+  }
+
+  moveBall(source, destination) {
+    const ball = source.transfer;
+    destination.transfer = ball;
   }
 }

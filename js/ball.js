@@ -14,6 +14,11 @@ export class Ball extends BaseComponent {
     root.append(this.element);
   }
 
+  bounce() {
+    this.state = !this.state;
+    this.element.classList.toggle('bounce');
+  }
+  
   create() {
     let strName = this.size == 0 ? "small " : "ball ";
     document.getElementById(`${1}${1}`).className = strName + this.color;
@@ -31,19 +36,8 @@ export class Ball extends BaseComponent {
     this.col = colNew;
     return;
   }
-  delete() {
-    document.getElementById(`${this.row}${this.col}`).style.animationName = 'explode';
-    sleep(300).then(() => {
-      document.getElementById(`${this.row}${this.col}`).style.animationName = 'none';
-      document.getElementById(`${this.row}${this.col}`).className = "";
-    });
-    field[this.row][this.col] = null;
-    return;
-  }
-  bounce() {
-    this.state = !this.state;
-    this.element.classList.toggle('bounce');
-  }
+
+ 
   grow() {
     /*  if(this.size == 1) return;*/
     document.getElementById(`${this.row}${this.col}`).style.animationName = 'grow';
