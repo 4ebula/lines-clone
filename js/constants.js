@@ -1,0 +1,1 @@
+export const COLOR_PALETTE = ["red", "green", "blue", "yellow", "purple", "cyan", "black"];
