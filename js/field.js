@@ -53,6 +53,7 @@ export class Field extends BaseComponent {
       }
     }
   }
+  
   gameLogic2(target) {
   let row = +`0${cell}`.slice(-2)[0];
   let col = +`0${cell}`.slice(-2)[1];

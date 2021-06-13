@@ -6,6 +6,4 @@ export class Game {
   constructor() {
     this.gameField = new Field(document.querySelector('.container'));
   }
-
-  
 }
