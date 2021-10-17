@@ -3,9 +3,7 @@ import { BaseComponent } from './base-component.js';
 
 export class Cell extends BaseComponent {
   row;
-
   column;
-
   ball = null;
 
   constructor(i, j, root) {
@@ -16,8 +14,8 @@ export class Cell extends BaseComponent {
     root.append(this.element);
   }
 
-  createBall() {
-    this.ball = new Ball(this.element);
+  createBall(isSmall = false) {
+    this.ball = new Ball(this.element, isSmall);
   }
 
   set transfer(ball) {
@@ -30,5 +28,14 @@ export class Cell extends BaseComponent {
     this.element.innerHTML = '';
     this.ball = null;
     return ball;
+  }
+
+  clear() {
+    this.element.innerHTML = '';
+    this.ball = null;
+  }
+
+  burnBall() {
+    this.clear();
   }
 }
